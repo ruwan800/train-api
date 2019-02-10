@@ -1,0 +1,4 @@
+ -r ts-node/register
+--require=dotenv/config
+--exit
+--timeout 20000

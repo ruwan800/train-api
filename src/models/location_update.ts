@@ -1,16 +1,25 @@
 import * as mongoose from 'mongoose';
 
 const locationUpdateSchema = new mongoose.Schema({
-    lon: {
+    uid: {
         type: mongoose.Schema.Types.Number,
     },
-    lat: {
+    longitude: {
         type: mongoose.Schema.Types.Number,
     },
-    timestamp: {
+    latitude: {
+        type: mongoose.Schema.Types.Number,
+    },
+    date: {
         type: mongoose.Schema.Types.Number
     },
-    velocity: {
+    accuracy: {
+        type: mongoose.Schema.Types.Number
+    },
+    speed: {
+        type: mongoose.Schema.Types.Number
+    },
+    speed_accuracy: {
         type: mongoose.Schema.Types.Number
     },
 });

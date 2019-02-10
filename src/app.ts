@@ -1,8 +1,9 @@
 import * as express from 'express';
-import {Application, Express} from 'express';
+import {Application} from 'express';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import {Routes} from './routes';
+import {dbConnect} from "./util/db_connect";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -13,6 +14,7 @@ class App {
     // Run configuration methods on the Express instance.
     constructor() {
         this.express = express();
+        dbConnect();
         this.middleware();
         this.routes();
     }

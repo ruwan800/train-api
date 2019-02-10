@@ -1,5 +1,7 @@
 import * as http from 'http';
 import * as debug from 'debug';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 import App from './app';
 
