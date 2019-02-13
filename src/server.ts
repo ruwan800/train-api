@@ -42,7 +42,7 @@ function onError(error: NodeJS.ErrnoException): void {
 
 function onListening(): void {
     let address = server.address();
-    let bind = (typeof address === 'string') ? `pipe ${address}` : `port ${address.port}`;
+    let bind = (typeof address === 'string') ? `pipe ${address}` : `port ${address ? address.port : 0}`;
     debug(`Listening on ${bind}`);
     console.log(`Listening on ${bind}`);
 }

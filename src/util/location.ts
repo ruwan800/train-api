@@ -19,7 +19,7 @@ export namespace Location {
     }
 
     export interface PVA {
-        position: number
+        position: number;
         velocity: number;
         acceleration: number;
     }
@@ -39,30 +39,58 @@ export namespace Location {
     }
 
     export function getPH(p0: Point, p1: TrackPoint, p2: TrackPoint): PH {
+        if (p2.position < p1.position) {
+            const temp = p2;
+            p2 = p1;
+            p1 = temp;
+        }
         const p01 = getDistance(p0, p1);
         const p02 = getDistance(p0, p2);
         const p12 = getDistance(p1, p2);
-        const p1x = (p01 * p12) / (p02 - p01);
+        const p1x = (p01 * p12) / (p02 + p01);
         const h = Math.sqrt((p01 ** 2) - (p1x ** 2));
         const pos = p1.position < p2.position ? p1.position : p2.position;
+        // appLogger.info("\n______________________DH______________________________");
+        // appLogger.info(`p0: ${JSON.stringify(p0)}`);
+        // appLogger.info(`p1: ${p1}`);
+        // appLogger.info(`p2: ${p2}`);
+        // appLogger.info(`position: ${pos}`);
+        // appLogger.info(`pos + p1x: ${pos + p1x}`);
+        // appLogger.info(`h: ${h}`);
+        // appLogger.info(`p01: ${p01}`);
+        // appLogger.info(`p02: ${p02}`);
+        // appLogger.info(`p12: ${p12}`);
+        // appLogger.info(`p1x: ${p1x}`);
+        // appLogger.info("\n\n");
         return {position: pos + p1x, height: h, line_id: p1.line_id};
     }
 
     export function getPVA(userPoint: UserPoint, previousUserPoint: UserPoint): PVA {
-        const distance = userPoint.position - previousUserPoint.position; //in kilometers
+        const distance = userPoint.position - previousUserPoint.position; // in kilometers
         const duration = userPoint.timestamp - previousUserPoint.timestamp; // in milliseconds
         const vMean = duration === 0 ? 0 : (distance * 1000) / (duration / 1000);
-        const v = (2 * vMean) - previousUserPoint.velocity;
-        const a = distance === 0 ? 0 : 2 * (vMean - previousUserPoint.velocity) / distance;
-        return {position: userPoint.position, velocity: v, acceleration: a};
+        // const v = (2 * vMean) - previousUserPoint.velocity;
+        // const a = distance === 0 ? 0 : 2 * (vMean - previousUserPoint.velocity) / distance;
+
+        // appLogger.info("\n_________________________________________________________");
+        // appLogger.info(`p1:${JSON.stringify(userPoint)}`);
+        // appLogger.info(`p2:${JSON.stringify(previousUserPoint)}`);
+        // appLogger.info(`distance:${distance}`);
+        // appLogger.info(`duration:${duration}`);
+        // appLogger.info(`vMean:${vMean}`);
+        // appLogger.info(`v:${v}`);
+        // appLogger.info(`a:${a}`);
+        // appLogger.info("\n");
+        return {position: userPoint.position, velocity: vMean, acceleration: 0};
     }
 
     export function getUpdatedPVA(userPoint: UserPoint, time: number): PVA {
         const up = userPoint;
-        const timeS = time / 1000;
-        const newP = up.position + (up.velocity * timeS) + (up.acceleration * Math.pow(timeS, 2) / 2);
-        const newV = up.velocity + (up.acceleration * timeS);
-        return {position: newP, velocity: newV, acceleration: up.acceleration}
+        const timeS = (time - userPoint.timestamp) / 1000;
+        const newP = up.position + ((up.velocity * timeS) / 1000); // + (up.acceleration * Math.pow(timeS, 2) / 2);
+        // const newV = up.velocity + (up.acceleration * timeS);
+        // appLogger.info(`getUpdated PVA up.pos: ${up.position}, up.vel: ${up.velocity}, times: ${timeS}, newP: ${newP}`);
+        return {position: newP, velocity: up.velocity, acceleration: 0};
     }
 
 }

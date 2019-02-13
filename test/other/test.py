@@ -2,11 +2,15 @@ import os
 import json
 import time
 
-lat = 79.936725
-latPlus = 0.00086243333
+# 7.047126, 79.931007
 
-lon = 7.0497139
-lonPlus = 0.00179396666
+#7.081347, 79.957967
+
+lat = 79.931007
+latPlus = 0.002246667
+
+lon = 7.047126
+lonPlus = 0.00285175
 
 
 for i in range(12):

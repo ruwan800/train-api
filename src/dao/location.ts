@@ -2,6 +2,7 @@ import {UserPoint, UserPointModel} from "../models/user_point";
 import {TrainPoint, TrainPointModel} from "../models/train_point";
 import {Location} from "../util/location";
 import {TrackPoint, TrackPointModel} from "../models/track_point";
+import {appLogger} from "../util/logging";
 
 
 export namespace LocationDao {
@@ -20,6 +21,9 @@ export namespace LocationDao {
                 return distA === distB ? 0 : distA < distB ? -1 : 1;
             });
         }
+        // appLogger.info("\n___________________________  POINTS  _____________________________________\n");
+        // appLogger.info(JSON.stringify(points));
+        // appLogger.info("\n\n");
         return points.slice(0, 2);
     }
 
