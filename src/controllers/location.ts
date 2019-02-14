@@ -77,7 +77,7 @@ export namespace LocationController {
             // appLogger.info("saving user point"+ userPoint);
             await userPoint.save();
 
-            const msg = previousUserPoint ? getMessage(userPoint, previousUserPoint) : `initial entry - p:${userPoint.position}, v${userPoint.velocity}`;
+            const msg = previousUserPoint ? getMessage(userPoint, previousUserPoint) : `initial entry - p:${userPoint.position}, v:${userPoint.velocity}`;
 
             return res.send({success: true, message: msg});
         } catch (e) {
