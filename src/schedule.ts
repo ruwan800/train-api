@@ -106,7 +106,7 @@ class Schedule {
 }
 
 Schedule.execute().then(() => {
-    // appLogger.info("Executed schedule");
+    appLogger.info("Executed schedule");
     process.exit(1);
 }).catch((e) => {
     appLogger.error(e);
