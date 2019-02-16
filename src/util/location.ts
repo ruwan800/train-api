@@ -47,22 +47,25 @@ export namespace Location {
         const p01 = getDistance(p0, p1);
         const p02 = getDistance(p0, p2);
         const p12 = getDistance(p1, p2);
-        const p1x = (p01 * p12) / (p02 + p01);
-        const h = Math.sqrt((p01 ** 2) - (p1x ** 2));
-        const pos = p1.position < p2.position ? p1.position : p2.position;
-        // appLogger.info("\n______________________DH______________________________");
-        // appLogger.info(`p0: ${JSON.stringify(p0)}`);
-        // appLogger.info(`p1: ${p1}`);
-        // appLogger.info(`p2: ${p2}`);
-        // appLogger.info(`position: ${pos}`);
-        // appLogger.info(`pos + p1x: ${pos + p1x}`);
-        // appLogger.info(`h: ${h}`);
-        // appLogger.info(`p01: ${p01}`);
-        // appLogger.info(`p02: ${p02}`);
-        // appLogger.info(`p12: ${p12}`);
-        // appLogger.info(`p1x: ${p1x}`);
-        // appLogger.info("\n\n");
-        return {position: pos + p1x, height: h, line_id: p1.line_id};
+
+        const cos012 = (Math.pow(p01, 2) + Math.pow(p12, 2) - Math.pow(p02, 2))/(2*p01*p12);
+        const theta012 = Math.acos(cos012);
+        const sin012 = Math.sin(theta012);
+        const d = cos012 * p01;
+        const h = sin012 * p01;
+
+        appLogger.info("\n______________________DH______________________________");
+        appLogger.info(`p0: ${JSON.stringify(p0)}`);
+        appLogger.info(`p1: ${p1}`);
+        appLogger.info(`p2: ${p2}`);
+        appLogger.info(`position: ${p1.position}`);
+        appLogger.info(`cos012: ${cos012}`);
+        appLogger.info(`sin012: ${sin012}`);
+        appLogger.info(`d: ${d}`);
+        appLogger.info(`h: ${h}`);
+        appLogger.info(`pos: ${p1.position +d}`);
+        appLogger.info("\n\n");
+        return {position: p1.position +d, height: h, line_id: p1.line_id};
     }
 
     export function getPVA(userPoint: UserPoint, previousUserPoint: UserPoint): PVA {
