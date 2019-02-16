@@ -18,3 +18,5 @@ http://localhost:3000/api/public/trains
 http://localhost:3000/api/public/location-update
 {user_id, lat, lon, timestamp}
 {"success":true,"message":"train id:1550083412, p:16.288247471855662, v-20.121922306106857"}
+
+curl "http://157.230.166.94:3000/api/public/location-update" -H "Content-Type: application/json" --request POST --data '{"user_id": 1, "timestamp": $(date +"%s"), "lat": , "lon": }' 

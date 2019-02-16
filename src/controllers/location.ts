@@ -21,7 +21,7 @@ export namespace LocationController {
                 appLogger.info("low velocity");
                 return res.send({success: false, message: "not moving"});
             }
-            const point: Location.Point = {lat: req.body.lat, lon: req.body.lon};
+            const point: Location.Point = {lon: req.body.lon, lat: req.body.lat};
             appLogger.info("point created", point);
             const closest: TrackPoint[] = await LocationDao.getClosestTwoPoints(point);
             if (closest.length < 2) {
@@ -39,8 +39,8 @@ export namespace LocationController {
 
             userPoint.position = dh.position;
             userPoint.line_id = dh.line_id;
-            userPoint.lat = req.body.lat;
             userPoint.lon = req.body.lon;
+            userPoint.lat = req.body.lat;
             userPoint._id = req.body.user_id;
             userPoint.timestamp = req.body.timestamp;
 

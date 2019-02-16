@@ -4,8 +4,8 @@ import {Document, model, Model, Schema} from "mongoose";
 export interface UserPoint extends Document {
     _id: number;
     line_id: number;
-    lat: number;
     lon: number;
+    lat: number;
     position: number;
     velocity: number;
     acceleration: number;
@@ -24,11 +24,11 @@ const userPointSchema = new Schema({
         type: Schema.Types.Number,
         required: true,
     },
-    lat: {
+    lon: {
         type: Schema.Types.Number,
         required: true,
     },
-    lon: {
+    lat: {
         type: Schema.Types.Number,
         required: true,
     },

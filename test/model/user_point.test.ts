@@ -20,8 +20,8 @@ describe('LocationDao', () => {
         up1.velocity = 0;
         up1.train_id = 0;
         up1.line_id = 1;
-        up1.lat = 80.4;
-        up1.lon = 7.4;
+        up1.lon = 80.4;
+        up1.lat = 7.4;
         up1.continuation = 0;
         up1.timestamp = new Date().getTime();
 

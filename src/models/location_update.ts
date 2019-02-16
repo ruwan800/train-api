@@ -4,10 +4,10 @@ const locationUpdateSchema = new mongoose.Schema({
     uid: {
         type: mongoose.Schema.Types.Number,
     },
-    longitude: {
+    lat: {
         type: mongoose.Schema.Types.Number,
     },
-    latitude: {
+    lon: {
         type: mongoose.Schema.Types.Number,
     },
     date: {

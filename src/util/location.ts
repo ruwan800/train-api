@@ -8,8 +8,8 @@ export namespace Location {
     const POLAR_RADIUS = 6378;
 
     export interface Point {
-        lat: number;
         lon: number;
+        lat: number;
     }
 
     export interface PH {
@@ -25,17 +25,17 @@ export namespace Location {
     }
 
     export function getDistance(location1: Point, location2: Point): number {
-        const lat_d = (Math.abs(location2.lat - location1.lat)) * (EQUATOR_RADIUS * 2 * Math.PI / 360);
-        const lon_d = (Math.abs(location2.lon - location1.lon)) * (POLAR_RADIUS * 2 * Math.PI / 360);
-        return Math.sqrt(Math.pow(lon_d, 2) + Math.pow(lat_d, 2));
+        const lon_d = (Math.abs(location2.lon - location1.lon)) * (EQUATOR_RADIUS * 2 * Math.PI / 360);
+        const lat_d = (Math.abs(location2.lat - location1.lat)) * (POLAR_RADIUS * 2 * Math.PI / 360);
+        return Math.sqrt(Math.pow(lat_d, 2) + Math.pow(lon_d, 2));
     }
 
     export function getDistantPoints(location: Point, distance: number): Point[] {
         new TrackPointModel();
-        const t_lat = distance * 360 / (EQUATOR_RADIUS * 2 * Math.PI);
-        const t_lon = distance * 360 / (POLAR_RADIUS * 2 * Math.PI);
-        return [{lat: location.lat - t_lat, lon: location.lon - t_lon},
-            {lat: location.lat + t_lat, lon: location.lon + t_lon}];
+        const t_lon = distance * 360 / (EQUATOR_RADIUS * 2 * Math.PI);
+        const t_lat = distance * 360 / (POLAR_RADIUS * 2 * Math.PI);
+        return [{lon: location.lon - t_lon, lat: location.lat - t_lat},
+            {lon: location.lon + t_lon, lat: location.lat + t_lat}];
     }
 
     export function getPH(p0: Point, p1: TrackPoint, p2: TrackPoint): PH {
