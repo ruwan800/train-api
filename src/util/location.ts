@@ -8,8 +8,8 @@ export namespace Location {
     const POLAR_RADIUS = 6378;
 
     export interface Point {
-        lat: number;
         lon: number;
+        lat: number;
     }
 
     export interface PH {
@@ -25,17 +25,17 @@ export namespace Location {
     }
 
     export function getDistance(location1: Point, location2: Point): number {
-        const lat_d = (Math.abs(location2.lat - location1.lat)) * (EQUATOR_RADIUS * 2 * Math.PI / 360);
-        const lon_d = (Math.abs(location2.lon - location1.lon)) * (POLAR_RADIUS * 2 * Math.PI / 360);
-        return Math.sqrt(Math.pow(lon_d, 2) + Math.pow(lat_d, 2));
+        const lon_d = (Math.abs(location2.lon - location1.lon)) * (EQUATOR_RADIUS * 2 * Math.PI / 360);
+        const lat_d = (Math.abs(location2.lat - location1.lat)) * (POLAR_RADIUS * 2 * Math.PI / 360);
+        return Math.sqrt(Math.pow(lat_d, 2) + Math.pow(lon_d, 2));
     }
 
     export function getDistantPoints(location: Point, distance: number): Point[] {
         new TrackPointModel();
-        const t_lat = distance * 360 / (EQUATOR_RADIUS * 2 * Math.PI);
-        const t_lon = distance * 360 / (POLAR_RADIUS * 2 * Math.PI);
-        return [{lat: location.lat - t_lat, lon: location.lon - t_lon},
-            {lat: location.lat + t_lat, lon: location.lon + t_lon}];
+        const t_lon = distance * 360 / (EQUATOR_RADIUS * 2 * Math.PI);
+        const t_lat = distance * 360 / (POLAR_RADIUS * 2 * Math.PI);
+        return [{lon: location.lon - t_lon, lat: location.lat - t_lat},
+            {lon: location.lon + t_lon, lat: location.lat + t_lat}];
     }
 
     export function getPH(p0: Point, p1: TrackPoint, p2: TrackPoint): PH {
@@ -47,22 +47,25 @@ export namespace Location {
         const p01 = getDistance(p0, p1);
         const p02 = getDistance(p0, p2);
         const p12 = getDistance(p1, p2);
-        const p1x = (p01 * p12) / (p02 + p01);
-        const h = Math.sqrt((p01 ** 2) - (p1x ** 2));
-        const pos = p1.position < p2.position ? p1.position : p2.position;
+
+        const cos012 = (Math.pow(p01, 2) + Math.pow(p12, 2) - Math.pow(p02, 2)) / (2 * p01 * p12);
+        const theta012 = Math.acos(cos012);
+        const sin012 = Math.sin(theta012);
+        const d = cos012 * p01;
+        const h = sin012 * p01;
+
         // appLogger.info("\n______________________DH______________________________");
         // appLogger.info(`p0: ${JSON.stringify(p0)}`);
         // appLogger.info(`p1: ${p1}`);
         // appLogger.info(`p2: ${p2}`);
-        // appLogger.info(`position: ${pos}`);
-        // appLogger.info(`pos + p1x: ${pos + p1x}`);
+        // appLogger.info(`position: ${p1.position}`);
+        // appLogger.info(`cos012: ${cos012}`);
+        // appLogger.info(`sin012: ${sin012}`);
+        // appLogger.info(`d: ${d}`);
         // appLogger.info(`h: ${h}`);
-        // appLogger.info(`p01: ${p01}`);
-        // appLogger.info(`p02: ${p02}`);
-        // appLogger.info(`p12: ${p12}`);
-        // appLogger.info(`p1x: ${p1x}`);
+        // appLogger.info(`pos: ${p1.position + d}`);
         // appLogger.info("\n\n");
-        return {position: pos + p1x, height: h, line_id: p1.line_id};
+        return {position: p1.position + d, height: h, line_id: p1.line_id};
     }
 
     export function getPVA(userPoint: UserPoint, previousUserPoint: UserPoint): PVA {

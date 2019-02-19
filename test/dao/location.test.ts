@@ -11,7 +11,7 @@ describe('LocationDao', () => {
 
     it('#getClosestTwoPoints()', async () => {
 
-        const point: Location.Point  =  {lat: 79.8474075, lon: 6.9284056};
+        const point: Location.Point  =  {lon: 79.8474075, lat: 6.9284056};
         const items = await LocationDao.getClosestTwoPoints(point);
         assert.isNotNull(items[0]);
         assert.isNotNull(items[1]);

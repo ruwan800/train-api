@@ -12,7 +12,7 @@ export namespace LocationDao {
 
     export async function getClosestTwoPoints(point: Location.Point): Promise<TrackPoint[]> {
         const [minP, maxP] = Location.getDistantPoints(point, MAX_TRACK_POINT_NEARBY_DISTANCE);
-        const conditions = {lat: {$gt: minP.lat, $lt: maxP.lat}, lon: {$gt: minP.lon, $lt: maxP.lon}};
+        const conditions = {lon: {$gt: minP.lon, $lt: maxP.lon}, lat: {$gt: minP.lat, $lt: maxP.lat}};
         let points = await TrackPointModel.find(conditions);
         if (2 < points.length) {
             points = points.sort((a, b) => {

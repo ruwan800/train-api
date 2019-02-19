@@ -4,6 +4,8 @@ import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import {Routes} from './routes';
 import {dbConnect} from "./util/db_connect";
+import {handleError} from "./middleware/error-handler";
+import {logRequest} from "./middleware/request-logger";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -24,6 +26,8 @@ class App {
         this.express.use(logger('dev'));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({extended: false}));
+        this.express.use(handleError);
+        this.express.use(logRequest);
     }
 
     // Configure API endpoints.

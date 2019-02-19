@@ -4,8 +4,8 @@ import {Document, model, Model, Schema} from "mongoose";
 export interface TrackPoint extends Document {
     index: number;
     line_id: number;
-    lat: number;
     lon: number;
+    lat: number;
     position: number;
 }
 
@@ -20,10 +20,10 @@ const trackPointSchema = new Schema({
     line_id: {
         type: Schema.Types.Number,
     },
-    lat: {
+    lon: {
         type: Schema.Types.Number,
     },
-    lon: {
+    lat: {
         type: Schema.Types.Number,
     },
     diff: {
