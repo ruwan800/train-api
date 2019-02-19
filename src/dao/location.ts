@@ -34,8 +34,8 @@ export namespace LocationDao {
     export async function getNearbyTrains(userPoint: UserPoint): Promise<TrainPoint[]> {
         const maxD = MAX_TRAIN_NEARBY_DISTANCE;
         const pos = userPoint.position;
-        const sppedCond = 0 < userPoint.velocity ? {$gt: 0} : {$lt: 0};
-        const conditions = {position: {$gt: pos - maxD, $lt: pos + maxD}, line_id: userPoint.line_id, velocity: sppedCond};
+        const speedCond = 0 < userPoint.velocity ? {$gt: 0} : {$lt: 0};
+        const conditions = {position: {$gt: pos - maxD, $lt: pos + maxD}, line_id: userPoint.line_id, velocity: speedCond};
         return await TrainPointModel.find(conditions);
     }
 
