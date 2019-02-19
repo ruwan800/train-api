@@ -45,7 +45,7 @@ export namespace LocationDao {
     }
 
     export async function findNewActiveUserPoints(): Promise<UserPoint[]> {
-        const conditions = {continuation: {$gt: 2}, train_id: 0, velocity: {$or: [{$gt: 4}, {$lt: -4}]}};
+        const conditions = {continuation: {$gt: 2}, train_id: 0, velocity: {$not: {$gt: -4, $lt: 4}}};
         return await UserPointModel.find(conditions);
     }
 }
