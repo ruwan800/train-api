@@ -15,7 +15,7 @@ lonPlus = 0.00285175
 
 for i in range(12):
     data = {}
-    data['user_id'] = 1
+    data['user_id'] = 2
     data['lat'] = lat + (i*latPlus)
     data['lon'] = lon + (i*lonPlus)
     data['timestamp'] = int(time.time()*1000)
