@@ -9,6 +9,7 @@ export interface TrainPoint extends Document {
     acceleration: number;
     timestamp: number;
     visible: number;
+    name: string;
 }
 
 
@@ -40,6 +41,10 @@ const trainPointSchema = new Schema({
     visible: {
         type: Schema.Types.Number,
         required: true,
+    },
+    name: {
+        type: Schema.Types.String,
+        required: false,
     },
 });
 

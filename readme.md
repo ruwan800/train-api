@@ -27,7 +27,8 @@ http://localhost:3000/api/public/location-update
 {"success":true,"message":"train id:1550083412, p:16.288247471855662, v-20.121922306106857"}
 
 
-***** station
+***** stations
+http://157.230.166.94:3000/api/public/stations
 {"_id":10,"name":"Aluthgama","position":59.452,"line_id":1}
 
 #### CURL 

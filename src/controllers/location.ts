@@ -79,7 +79,7 @@ export namespace LocationController {
 
             const msg = previousUserPoint ? getMessage(userPoint, previousUserPoint) : `initial entry - p:${userPoint.position}, v:${userPoint.velocity}`;
 
-            return res.send({success: true, message: msg});
+            return res.send({success: true, message: msg, data: userPoint});
         } catch (e) {
             appLogger.error("Error location update:", e);
             return res.send({success: false, message: e.toString()});
