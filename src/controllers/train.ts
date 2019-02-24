@@ -14,7 +14,8 @@ export namespace TrainController {
         if (train) {
             train.name = req.body.name;
             await train.save();
+            return res.send({success: true});
         }
-        return res.send({success: true});
+        return res.send({success: false});
     }
 }
